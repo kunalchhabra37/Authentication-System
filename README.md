@@ -9,3 +9,4 @@
 - MySql
 - HTML
 - JQuery
+- Ajax
