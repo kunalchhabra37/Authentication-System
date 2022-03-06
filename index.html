@@ -1,0 +1,133 @@
+<!-- <?php 
+$session_var = (isset($_SESSION['status'])) ? $_SESSION['status'] : 'none';
+?> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div id='main'>
+    <div>
+        <h1>Home Page</h1>
+    </div>
+    <button id='logout'>Click here to Logout</button>
+    <button id='login'>Click Here to Login</button>
+    <button id='signup'>Click here to signup</button>
+    <button id='show'>Click here to show db</button>
+    <button id='hide'>Click here to retract db</button>
+    <div id='txt'></div>
+</div>    
+    <script>
+        //  $('document').ready(function(){
+        //     $.ajax({
+        //         type: 'GET',
+        //         url:'auth.php',
+        //         cache: false,
+        //         success: function(response){
+        //             if(response === true){
+        //                 $('#login').hide();
+        //                 $('#signup').hide();
+        //             }else{
+        //                 $('#show').hide();
+        //                 $('#hide').hide();
+        //                 $('#logout').hide();
+        //             }
+        //         }
+        //     });
+        // });
+        // <?php 
+        // if($_SESSION['status'] == 'true'){
+        //     // $('#login').hide();
+        //     // $('#signup').hide();
+        //     echo 'true';
+        // }else{
+        //     // $('#show').hide();
+        //     // $('#hide').hide();
+        //     // $('#logout').hide();
+        //     echo 'false';
+        // }
+        // ?>
+        // var session = "<?php echo $session_var; ?>";
+        // alert("<?php echo $_SESSION['status']; ?>");
+        // console.log(session);
+        // var sessionId = "<?php echo $_SESSION['status']; ?>";
+        // console.log(sessionId);
+        $(document).ready(function(){
+            $.ajax({
+            type: 'POST',
+            url: '/programs/auth/auth.php',
+            success: function(response){
+                alert(respose);
+            },
+            error: function(){
+                alert("error");
+            }
+        });
+        })
+        $('#show').click(load);
+        $('#hide').hide();
+        $('#login').click(login);
+        $('#signup').click(signup);
+        $('#logout').click(logout);
+        $('#hide').click(()=>{
+            $('#txt').text('');
+            $('#show').show();
+            $('#hide').hide();
+        });
+        function load(){
+            $.ajax({
+                type: 'POST',
+                url: 'forms.php',
+                success: function(response){
+                    $('#txt').html(response);
+                    $('#show').hide();
+                    $('#hide').show();
+                }
+            });
+        }
+        function login(){
+            console.log("signup Function Executed");
+            $.ajax({
+                type:'POST',
+                url: '/programs/auth/login/login-page.html',
+                cache: false,
+                success: function(response){
+                    
+                    $('#main').html(response);
+                },
+                error: function(response){
+                    alert("Error");
+                }
+            });
+        }
+        function signup(){
+            $.ajax({
+                type:'POST',
+                url: '/programs/auth/signup/signup.html',
+                cache: false,
+                success: function(response){
+                    // $('html').html('');
+                    $('#main').html(response);
+                },
+                error: function(response){
+                    alert("Error");
+                }
+            });
+        }
+        function logout(){
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/logout/logout.html',
+                success: function(response){
+                    $('#main').html(response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

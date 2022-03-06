@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<div id='main'>
+    <form id="login_form">
+        <div>
+            username/email<input type="text" id="email">
+        </div>
+        <div>
+            password<input type="password" id="pass">
+        </div>
+        <div>
+            <input type="button" id="login_but" value="LOG IN">
+        </div>
+    </form>
+    <br>
+    <button id='home'>Go to Home</button>
+    <button id='signup'>Click here to signup</button>
+</div>
+    <script>
+        //  $('document').ready(function(){
+        //     $.ajax({
+        //         type: 'GET',
+        //         url:'auth.php',
+        //         cache: false,
+        //         success: function(response){
+        //             if(response === true){
+        //                 home();
+        //             }else{
+        //                 $('#show').hide();
+        //                 $('#hide').hide();
+        //                 $('#logout').hide();
+        //             }
+        //         }
+        //     });
+        // });
+        $('#home').click(home);
+        $('#login_but').click(load);
+        $('#signup').click(signup);
+        function load(){
+            let dat = {'login': $('#email').val(),
+                       'password': $('#pass').val()};
+            console.log(dat);
+            $('#login_form').get(0).reset();
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/login/login-page.php',
+                data: dat,
+                cache: false,
+                success: function(response){
+                    // $('#login_form').hide();
+                    alert(response);
+                    home();
+                },
+                error:function(response){
+                    alert("Error");
+                }
+            });
+        }
+        function signup(){
+            $.ajax({
+                type:'POST',
+                url: '/programs/auth/signup/signup.html',
+                cache: false,
+                success: function(response){
+                    // $('html').html('');
+                    $('#main').html(response);
+                },
+                error: function(response){
+                    alert("Error");
+                }
+            });
+        }
+        function home(){
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/index.html',
+                success: function(response){
+                    $('#main').html(response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

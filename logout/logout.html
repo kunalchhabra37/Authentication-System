@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<div id='main'>
+    <div id="txt"></div>
+    <button id='home'>Go back to Home</button>
+    <button id='logout'>Click here To Logout</button>
+    <button id=login>Click here to Login</button>
+</div>
+    <script>
+        //    $('document').ready(function(){
+        //     $.ajax({
+        //         type: 'GET',
+        //         url:'auth.php',
+        //         cache: false,
+        //         success: function(response){
+        //             if(response === true){
+        //                 $('#login').hide();
+        //             }else{
+        //                 login();
+        //             }
+        //         }
+        //     });
+        // });
+        $('#logout').click(load);
+        $('#login').hide();
+        $('#login').click(login);
+        $('#home').click(home);
+        function load(){
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/logout/logout.php',
+                success: function(response){
+                    $('#logout').hide();
+                    $('#txt').html(response);
+                    $('#login').show();
+                },
+                error: function(response){
+                    $('#txt').text('Error');
+                }
+
+            });
+        }
+
+        function login(){
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/login/login-page.html',
+                success: function(response){
+                    $('#main').html(response);
+                }
+            });
+        }
+        function home(){
+            $.ajax({
+                type: 'POST',
+                url: '/programs/auth/index.html',
+                success: function(response){
+                    $('#main').html(response);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
